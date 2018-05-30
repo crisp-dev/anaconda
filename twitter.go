@@ -280,8 +280,6 @@ func decodeResponse(resp *http.Response, data interface{}) error {
 	// so we need a special case when decoding the response
 	if (strings.HasSuffix(resp.Request.URL.String(), "upload.json") ||
 	   strings.Contains(resp.Request.URL.String(), "webhooks")) {
-	if strings.HasSuffix(resp.Request.URL.String(), "upload.json") ||
-		strings.Contains(resp.Request.URL.String(), "webhooks") {
 		if resp.StatusCode == 204 {
 			// empty response, don't decode
 			return nil
