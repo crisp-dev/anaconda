@@ -64,3 +64,4 @@ func (a TwitterApi) IndicateTyping(id int64) (err error) {
 	response_ch := make(chan response)
 	a.queryQueue <- query{a.baseUrl + "/direct_messages/indicate_typing.json", v, nil, _POST, response_ch}
 	return (<-response_ch).err
+}
