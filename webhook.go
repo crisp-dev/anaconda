@@ -4,6 +4,14 @@ import (
 	"net/url"
 )
 
+func (a TwitterApi) GetEnvironmentWebhooks(v url.Values) (u EnvirnmentResp, err error) {
+	v = cleanValues(v)
+	responseCh := make(chan response)
+
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/webhooks.json", v, &u, _GET, responseCh}
+	return u, (<-responseCh).err
+}
+
 //GetActivityWebhooks represents the twitter account_activity webhook
 //Returns all URLs and their statuses for the given app. Currently,
 //only one webhook URL can be registered to an application.
@@ -11,16 +19,25 @@ import (
 func (a TwitterApi) GetActivityWebhooks(v url.Values, env string) (u []WebHookResp, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
+
 	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks.json", v, &u, _GET, responseCh}
 	return u, (<-responseCh).err
 }
 
-//WebHookResp represents the Get webhook responses
+//EnvirnmentResp represents the Get environment responses
+type EnvirnmentResp struct {
+	Environments   []struct {
+		EnvironmentName  string `json:"environment_name"`
+		Webhooks         []WebHookResp `json:"webhooks"`
+	} `json:"environments"`
+}
+
+//WebHookResp represents the webhook object
 type WebHookResp struct {
-	ID        string
-	URL       string
-	Valid     bool
-	CreatedAt string
+	ID        string `json:"id"`
+	URL       string `json:"url"`
+	Valid     bool   `json:"valid"`
+	CreatedAt string `json:"created_at"`
 }
 
 //SetActivityWebhooks represents to set twitter account_activity webhook
