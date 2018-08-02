@@ -58,7 +58,7 @@ func (a TwitterApi) SetActivityWebhooks(v url.Values, env string) (u WebHookResp
 func (a TwitterApi) DeleteActivityWebhooks(v url.Values, webhookID string, env string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks.json" + webhookID, v, &u, _DELETE, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks/" + webhookID + ".json", v, &u, _DELETE, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -67,7 +67,7 @@ func (a TwitterApi) DeleteActivityWebhooks(v url.Values, webhookID string, env s
 func (a TwitterApi) PutActivityWebhooks(v url.Values, webhookID string, env string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks.json" + webhookID, v, &u, _PUT, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks/" + webhookID + ".json", v, &u, _PUT, responseCh}
 	return u, (<-responseCh).err
 }
 
