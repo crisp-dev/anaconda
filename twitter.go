@@ -207,7 +207,6 @@ func defaultValues(v url.Values) url.Values {
 	if v == nil {
 		v = url.Values{}
 	}
-	v.Set("tweet_mode", "extended")
 	return v
 }
 
