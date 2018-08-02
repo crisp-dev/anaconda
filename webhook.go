@@ -77,7 +77,7 @@ func (a TwitterApi) PutActivityWebhooks(v url.Values, webhookID string, env stri
 func (a TwitterApi) SetWHSubscription(v url.Values, webhookID string, env string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks/" + webhookID + "/subscriptions.json", v, &u, _POST, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/" + webhookID + "/subscriptions.json", v, &u, _POST, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -87,7 +87,7 @@ func (a TwitterApi) SetWHSubscription(v url.Values, webhookID string, env string
 func (a TwitterApi) GetWHSubscription(v url.Values, webhookID string, env string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks/" + webhookID + "/subscriptions.json", v, &u, _GET, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/" + webhookID + "/subscriptions.json", v, &u, _GET, responseCh}
 	return u, (<-responseCh).err
 }
 
@@ -97,6 +97,6 @@ func (a TwitterApi) GetWHSubscription(v url.Values, webhookID string, env string
 func (a TwitterApi) DeleteWHSubscription(v url.Values, webhookID string, env string) (u interface{}, err error) {
 	v = cleanValues(v)
 	responseCh := make(chan response)
-	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/webhooks/" + webhookID + "/subscriptions.json", v, &u, _DELETE, responseCh}
+	a.queryQueue <- query{a.baseUrl + "/account_activity/all/" + env + "/" + webhookID + "/subscriptions.json", v, &u, _DELETE, responseCh}
 	return u, (<-responseCh).err
 }
